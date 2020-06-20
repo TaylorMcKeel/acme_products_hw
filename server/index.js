@@ -18,7 +18,7 @@ const myReadFile = (path) => {
       if (e) {
         rej(e);
       } else {
-        res(JSON.parse(data.toString()));
+        res(JSON.parse(data));
       }
     });
   });
@@ -36,12 +36,11 @@ const myWriteFile = (path, data) => {
     });
   });
 };
-
-//this delivers content to each user?? like soemthing you want all people to have??
-app.use(express.static(path.join(__dirname, "../client")));
-
 //deals with incoming data for put and post requests??
 app.use(express.json());
+
+//this delivers content to each user?? like soemthing you want all people to have??
+app.use("/static", express.static(path.join(__dirname, "../client/")));
 
 //this gets the json data reads it then stores the data
 app.use((req, res, next) => {
@@ -53,7 +52,11 @@ app.use((req, res, next) => {
 
 //this takes the data stored from above and sends it to /api/products
 app.get("/api/products", (req, res, next) => {
-  res.send({ products: req.products });
+  res.send(req.products);
+});
+
+app.get("/", (req, res, next) => {
+  res.sendFile(path.join(__dirname, "../client/index.html"));
 });
 
 //this deletes data based on the product id
