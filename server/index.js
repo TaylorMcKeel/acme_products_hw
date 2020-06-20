@@ -40,7 +40,7 @@ const myWriteFile = (path, data) => {
 app.use(express.json());
 
 //this delivers content to each user?? like soemthing you want all people to have??
-app.use("/static", express.static(path.join(__dirname, "../client/")));
+app.use(express.static(path.join(__dirname, "../client/")));
 
 //this gets the json data reads it then stores the data
 app.use((req, res, next) => {
